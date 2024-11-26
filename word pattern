@@ -1,0 +1,38 @@
+typedef struct {
+    char* key;
+    char  ch;
+    UT_hash_handle hh;
+} hash_t;
+
+char entry(hash_t** wc, char* key, char ch, char use[]) {
+    hash_t* tmp;
+    HASH_FIND_STR(*wc, key, tmp);
+    if (tmp == NULL) {
+        tmp = malloc(sizeof(hash_t));
+        tmp->key = key;
+        if (use[ch - 'a'] == 0){
+            use[ch - 'a'] = 1;
+            tmp->ch = ch;
+        }
+        else tmp->ch = 0;
+
+        HASH_ADD_STR(*wc, key, tmp);
+    }
+    return tmp->ch;
+}
+
+bool wordPattern(char* pattern, char* s) {
+    hash_t *set = NULL;
+    char use[26] = {0};
+    char* p = strtok (s," ");
+    int i = 0;
+    for (;p != NULL;i++) {
+        char c = pattern[i];
+        if (c == 0) return false;
+        if (entry(&set, p, c, use) != c) return false;
+        p = strtok (NULL, " ");
+    }
+
+    if (pattern[i] != 0) return false;
+    return true;
+} 
