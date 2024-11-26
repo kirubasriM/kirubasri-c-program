@@ -1,0 +1,8 @@
+int addDigits(int num) 
+{
+	int ret = 0u;
+
+	ret = (num > 0u) ? (1u + (num - 1u) % 9u) : 0u;
+
+    return ret;
+}
