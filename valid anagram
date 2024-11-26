@@ -1,0 +1,36 @@
+
+
+bool isAnagram(char * s, char * t){
+
+    int table[26] = {0};
+    
+    char *word1 = s;
+    char *word2 = t;
+    
+    if(strlen(s) > strlen(t))
+    {
+        word1 = t;
+        word2 = s;
+    }
+    
+	// map values of shorter string in hashmap
+    while(*word1)
+    {
+        table[*word1 - 'a']++;
+        word1++;
+    }
+    
+	// check if values of longer string are the same (must have hashmap collision)
+    while(*word2)
+    {
+        table[*word2 - 'a']--;
+        if(table[*word2 - 'a'] < 0)
+        {
+            return false;
+        }
+        word2++;
+    }
+    
+    return true;;
+
+}
